@@ -13,6 +13,7 @@ function createAndWriteOutput(operator, resultBeforeCalc, calcNum){
     outputResult(currentResult, description);
 }
 
+
 function writeToLog(operand, prevRes, operationNum, newResult){
     const logEntry = {
         operations: operand,
@@ -21,48 +22,52 @@ function writeToLog(operand, prevRes, operationNum, newResult){
         result: newResult
     };
     logEntries.push(logEntry);
+    console.log(logEntries);
 }
 
-// Subtracts the input from the previos result
-function add(){
+function calculateResult(calculationType){
     const enteredNum = getUserInput();
-    const initialResult = currentResult;
-    currentResult = currentResult + enteredNum;
-    createAndWriteOutput("+", initialResult, enteredNum);
-    writeToLog("Add", initialResult, enteredNum, currentResult);
-}
 
-// Subtracts the input from the previos result
-function subtract(){
-    const enteredNum = getUserInput();
+    if(
+        calculationType != 'ADD' &&
+        calculationType != 'SUBTRACT' &&
+        calculationType != 'DIVIDE' &&
+        calculationType != 'MULTIPLY' ||
+        !enteredNum
+     ){
+        return
+    }
     const initialResult = currentResult;
-    currentResult = currentResult - enteredNum;
-    createAndWriteOutput("-", initialResult, enteredNum);
-    writeToLog("Subtract", initialResult, enteredNum, currentResult);
-}
-
-// multiples the input from the previos result
-function multiply(){
-    const enteredNum = getUserInput();
-    const initialResult = currentResult;
-    currentResult = currentResult * enteredNum;
-    createAndWriteOutput("*", initialResult, enteredNum);
-    writeToLog("Muliply", initialResult, enteredNum, currentResult);
-}
-
-// Divides the input from the previos result
-function divide(){
-    const enteredNum = getUserInput();
-    const initialResult = currentResult;
-    currentResult = currentResult / enteredNum;
-    createAndWriteOutput("/", initialResult, enteredNum);
-    writeToLog("Divide", initialResult, enteredNum, currentResult);
+    let mathOperator;
+    if(calculationType === 'ADD'){
+        mathOperator = "+";
+        currentResult += enteredNum;
+    }else if(calculationType === 'SUBTRACT'){
+        mathOperator = "-";
+        currentResult -= enteredNum;
+    }else if (calculationType === 'MULTIPLY'){
+        mathOperator = "*";
+        currentResult *= enteredNum;
+    }else if (calculationType === "DIVIDE"){
+        mathOperator = "/";
+        currentResult /= enteredNum;
+    }
+    createAndWriteOutput(mathOperator, initialResult, enteredNum);
+    writeToLog(calculationType, initialResult, enteredNum, currentResult);
 }
 
 // Adds a event listener based on which button you press and calls the
 // correspoding function
-addBtn.addEventListener("click", add);
-subtractBtn.addEventListener("click", subtract);
-multiplyBtn.addEventListener("click", multiply);
-divideBtn.addEventListener("click", divide);
+addBtn.addEventListener("click", function(){
+    calculateResult("ADD");
+});
+subtractBtn.addEventListener("click", function(){
+    calculateResult("SUBTRACT");
+});
+multiplyBtn.addEventListener("click", function(){
+    calculateResult("MULTIPLY");
+});
+divideBtn.addEventListener("click", function(){
+    calculateResult("DIVIDE");
+});
 
