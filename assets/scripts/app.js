@@ -58,16 +58,8 @@ function calculateResult(calculationType){
 
 // Adds a event listener based on which button you press and calls the
 // correspoding function
-addBtn.addEventListener("click", function(){
-    calculateResult("ADD");
-});
-subtractBtn.addEventListener("click", function(){
-    calculateResult("SUBTRACT");
-});
-multiplyBtn.addEventListener("click", function(){
-    calculateResult("MULTIPLY");
-});
-divideBtn.addEventListener("click", function(){
-    calculateResult("DIVIDE");
-});
+addBtn.addEventListener("click", calculateResult.bind(this, "ADD"));
+subtractBtn.addEventListener("click", calculateResult.bind(this, "SUBTRACT"));
+multiplyBtn.addEventListener("click", calculateResult.bind(this, "MULTIPLY"));
+divideBtn.addEventListener("click", calculateResult.bind(this, "DIVIDE"));
 
